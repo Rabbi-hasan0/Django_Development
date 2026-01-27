@@ -1,0 +1,29 @@
+
+CREATE DATABASE Test_DB; 
+
+-- Create table
+CREATE TABLE product ( 
+    p_id int AUTO_INCREMENT PRIMARY KEY, 
+    name varchar(100) not Null, 
+    description text, 
+    create_at timestamp DEFAULT CURRENT_TIME 
+);
+
+-- Insert value in table
+INSERT INTO product (name, description) 
+VALUES 
+    ('Rabbi Hasan', 162), 
+    ('Murad', 160), 
+    ('Shajuddin', '');
+
+-- Saw all raw(*) from product table
+SELECT * FROM `product` WHERE 1;
+
+-- Update value in table
+SELECT name, description 
+FROM product 
+WHERE description > 160 or description < 150;
+
+-- Delete value from table
+DELETE FROM product 
+WHERE description <= 0;
