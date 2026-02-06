@@ -1,0 +1,15 @@
+--Change column name permanently
+ALTER TABLE product
+CHANGE COLUMN name product_name varchar(255);
+
+--Change table name permanently
+ALTER TABLE product RENAME TO products_table;
+
+--Delete column from existing table
+ALTER TABLE products_table DROP COLUMN quantity;
+
+--Delete table permanently
+DROP TABLE products;
+
+--Delete database permanently
+DROP DATABASE test;

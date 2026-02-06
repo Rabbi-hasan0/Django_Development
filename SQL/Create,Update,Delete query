@@ -6,7 +6,7 @@ CREATE TABLE product (
     p_id int AUTO_INCREMENT PRIMARY KEY, 
     name varchar(100) not Null, 
     description text, 
-    create_at timestamp DEFAULT CURRENT_TIME 
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Insert value in table
@@ -27,3 +27,25 @@ WHERE description > 160 or description < 150;
 -- Delete value from table
 DELETE FROM product 
 WHERE description <= 0;
+
+--Add column in existing table
+ALTER TABLE product ADD COLUMN quantity int;
+
+--Rename column name as temoporary time
+SELECT name AS user_name FROM product;
+
+--sort sql data ascending/descending order
+SELECT name FROM product
+ORDER BY description ASC;
+
+-- Having, Group by clause example
+SELECT catergory_id, COUNT(product_id) AS total_products
+FROM product
+GROUP BY catergory_id
+Having total_products > 5;
+
+-- Join query example
+SELECT product_id, name, category.catergory_name
+FROM product
+inner JOIN category
+ON product.catergory_id = category.catergory_id;
