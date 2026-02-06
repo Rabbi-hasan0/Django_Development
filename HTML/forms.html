@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+
+            th, td {
+                border: 10px solid green;
+            padding: 6px;
+            }
+        </style>
+
+    </head>
+    <body>
+        <form novalidate autocomplete="off" method="get">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Your Name" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Your Email"><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Your Password"><br><br>
+
+            <label for="car">Choose One:</label> <br>
+            <select name="cars" id="car" required>
+                <option value="">Choose a car</option>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select> <br><br>
+            <input type="color" id="ch" value="black"> <br><br>
+            <input type="submit" value="Submit">
+            <input type="reset" value="Reset">
+        </form>
+    </body>
+</html>
