@@ -82,3 +82,61 @@ class LoginSerializer(serializers.Serializer):
     স্ট্রাকচার হুবহু কপি করার প্রয়োজন নেই, তাই আমরা সরাসরি serializers.Serializer ব্যবহার করি।
 '''
 ```
+
+
+### `views.py` তয়ে ব্যাবহার করার নিয়মঃ
+```python
+from django.shortcuts import render
+from django.contrib.auth.models import User
+from .serializers import RegisterSerializer, LoginSerializer
+from rest_framework import generics, status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Profile
+from rest_framework_simplejwt.tokens import RefreshToken
+# Create your views here.
+
+
+def get_token_for_user(user):
+    refresh = RefreshToken.for_user(user)
+    return {
+        'refresh': str(refresh),
+        'access': str(refresh.access_token),
+    }
+
+class RegisterView(generics.CreateAPIView):
+    queryset=User.objects.all()
+    serializer_class=RegisterSerializer
+
+# login
+class LoginView(APIView):
+    def post(self, request):
+        # User theke data recieve korci 
+        serializer = LoginSerializer(data=request.data)
+        # User jei data diyece sei data valid data kina check korci
+        serializer.is_valid(raise_exception=True)
+        
+        # Phone and Passward er validation check korci je valid format ba serializer er formate(like: charfield, 11 digit, etc) manteche kina
+        # এখান থেকেই আপনি ইউজারের পাঠানো ডেটা পাচ্ছেন
+        phone = serializer.validated_data['phone']
+        password = serializer.validated_data['password']
+        
+        try:
+            # Check korlam je ei number database e ache kina
+            profile = Profile.objects.get(phone=phone)
+            # Oy number er user ta nilam
+            user = profile.user
+        except Profile.DoesNotExist:
+            return Response({'error': 'Invalid Phone Number'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Number nebar por password ta valid ba exact match hocce kina dekhlam
+        if not user.check_password(password):
+            return Response({'error': 'Invalid Phone or Password'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # User valid hole token generate korchi, Toke amra use kori cause amader django to sobai use korte na pare,
+        # Onno kw phn ba onno framework use korte pare, tai valid hole amra take ekta token diye dibo and ei token diye se login korte parbe
+        token = get_token_for_user(user)
+        
+        # Eikhane message and token must ditei hobe and baki ta iccha moto
+        return Response({'message': 'Login Success', 'username':user.username, 'token': token}, status=status.HTTP_200_OK)
+```
