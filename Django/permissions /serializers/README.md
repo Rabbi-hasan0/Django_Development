@@ -10,6 +10,8 @@
 
 
 ### উদাহরণ:
+
+### `serializers.py` তে ব্যাবহার করার নিয়মঃ
 ```python
 from django.contrib.auth.models import User
 from rest_framework import serializers
@@ -84,7 +86,7 @@ class LoginSerializer(serializers.Serializer):
 ```
 
 
-### `views.py` তয়ে ব্যাবহার করার নিয়মঃ
+### `views.py` তে ব্যাবহার করার নিয়মঃ
 ```python
 from django.shortcuts import render
 from django.contrib.auth.models import User
