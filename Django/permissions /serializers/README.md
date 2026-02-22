@@ -29,6 +29,7 @@ class RegisterSerializer(serializers.ModelSerializer):
                 'write_only': True
             }
         }
+
     '''
     Django REST Framework-এর BaseSerializer ক্লাসে আগে থেকেই create এবং update নামে দু্টি মেথড ডিফাইন করা আছে। 
     আপনি যখন সিরিয়ালাইজারে create লিখছেন, তখন আপনি আসলে ওই মেইন মেথডটাকে Override করছেন।
@@ -37,7 +38,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         -যদি অবজেক্টটা নতুন হয়, তবে সে সিরিয়ালাইজারের create() মেথডকে খোঁজে।
         -যদি অবজেক্টটা আগে থেকেই থাকে (আপডেট করার সময়), তবে সে update() মেথডকে খোঁজে।
     
-    Main logic:
+    Work-flow:
         1. আগে চেকিং (Validation): আপনি যখন serializer.is_valid() কল করেন, তখনই জ্যাঙ্গো চেক করে দেখেছে যে phone ফিল্ডে ডাটা আছে কি না এবং সেটা ঠিক আছে কি না।
         2. ফোন আলাদা করা (Pop): User অবজেক্ট তৈরি করার ঠিক এক মুহূর্ত আগে আপনি phone টাকে পকেটস্থ (pop) করে নিলেন, যাতে User মডেলের ভেতর এটা ঢুকে কোনো ঝামেলা না পাকায়।
         3. ইউজার তৈরি (User Object): এবার শুধু username, password, আর first_name দিয়ে আপনি মূল ইউজারটা তৈরি করলেন।
@@ -49,7 +50,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         phone = validated_data.pop('phone')
         first_name = validated_data.pop('first_name')
 
-        # ২. ইউজার তৈরি করা (এখানে ( ) ব্র্যাকেট ব্যবহার করুন)
+        # ২. ইউজার তৈরি করা
         user = User.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
@@ -58,11 +59,23 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         # ৩. প্রোফাইল তৈরি করা
         Profile.objects.create(user=user, phone=phone)
-        
         return user
-
 
 class LoginSerializer(serializers.Serializer):
     phone = serializers.CharField(required=True)
     password = serializers.CharField(required=True)
+
+
+
+'''
+-> ModelSerializer বনাম Serializer
+
+    * RegisterSerializer (ModelSerializer): যখন আপনি রেজিস্ট্রেশন করছেন, তখন আপনি মূলত ডেটাবেসে (User Model) একটি নতুন ডেটা সেভ করছেন। 
+    ModelSerializer ব্যবহার করলে জ্যাঙ্গো নিজে থেকেই জানে যে কোন কোন ফিল্ড ডেটাবেসের কোন কলামে যাবে। এখানে Meta ক্লাস ব্যবহার করে আমরা 
+    জ্যাঙ্গোকে বলে দিই— "ভাই, তুমি এই User মডেলের স্ট্রাকচারটা ফলো করো।"
+
+    *LoginSerializer (Serializer): লগইন করার সময় আমরা ডেটাবেসে নতুন কোনো তথ্য সেভ করি না। আমরা শুধু ইউজার থেকে পাঠানো ফোন নম্বর আর 
+    পাসওয়ার্ড নিয়ে চেক (Validate) করে দেখি যে আমাদের ডেটাবেসে এই ইউজার আছে কি না। যেহেতু এখানে কোনো মডেলের স্ট্রাকচার হুবহু কপি করার প্রয়োজন নেই, 
+    তাই আমরা সরাসরি serializers.Serializer ব্যবহার করি।
+'''
 ```
