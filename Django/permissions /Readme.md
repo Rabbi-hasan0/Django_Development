@@ -1,7 +1,3 @@
-<div>
-  
-</div>
-
 ## Django REST Framework (DRF) Custom Permissions
 Django REST Framework (DRF)-এ `permissions.py` ফাইলটি মূলত আপনার API-এর Security Guard হিসেবে কাজ করে। এখানে আপনি ঠিক করেন যে কে আপনার ডেটা দেখতে পারবে, কে এডিট করতে পারবে আর কার কোনো এক্সেস থাকবে না।
 
