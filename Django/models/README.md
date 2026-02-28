@@ -70,3 +70,25 @@ We can also add **custom permissions**.
 ### Example
 ```python
 @permission_required('courses.add_course')
+```
+
+
+## Amra chaile User model e custom kichu fields add korte pari
+```python
+models.py
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone = models.CharField(max_length=15)
+    image = models.ImageField()
+    address = models.TextField()
+```
+```python (Recomended)
+models.py
+from django.contrib.auth.models import AbstractUser
+class User(AbstractUser):
+    phone = models.CharField(max_length=15)
+    role = models.CharField(max_length=20)
+
+settings.py
+AUTH_USER_MODEL = 'accounts.User'
+```
