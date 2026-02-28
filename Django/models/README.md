@@ -17,7 +17,7 @@
      login(request, user)
      logout(request)
      authenticate()
-    ```
+   ```
 
      
   3. d
