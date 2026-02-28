@@ -73,7 +73,7 @@ We can also add **custom permissions**.
 ```
 
 
-## ✅Amra chaile User model e custom kichu fields add korte pari
+## ✅ Amra chaile User model e custom kichu fields add korte pari
 ```python
 models.py
 class Profile(models.Model):
