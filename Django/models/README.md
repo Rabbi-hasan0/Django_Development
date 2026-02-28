@@ -4,7 +4,7 @@ This document describes what we can implement using Django's built-in **User Mod
 
 ---
 
-# 🚀 Core Features (Built-in)
+## 🚀 Core Features (Built-in)
 
 Django provides a ready-to-use authentication system.
 
@@ -37,13 +37,6 @@ Example:
 ```python
 from django.contrib.auth import authenticate, login, logout
 ```
-
-# 🔐 Django Authorization & User Management Guide
-
-This document explains how we can implement **Authorization, Roles, Permissions, Profile System, and Custom User Model** in Django.
-
-Built with ❤️ using Django authentication system.
-
 ---
 
 ### ✅ Authorization (Permissions)
