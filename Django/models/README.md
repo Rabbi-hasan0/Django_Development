@@ -82,8 +82,9 @@ class Profile(models.Model):
     image = models.ImageField()
     address = models.TextField()
 ```
+But (Recomended use AbstractUser)
 ```python 
-models.py  (Recomended)
+models.py  
 from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     phone = models.CharField(max_length=15)
