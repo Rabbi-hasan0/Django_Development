@@ -1,4 +1,4 @@
-### Serializers.py এর ভূমিকা
+## Serializers.py এর ভূমিকা
 
 `serializers.py` ফাইলটি Django মডেল এবং JSON ডেটার মধ্যে তথ্য আদান-প্রদান সহজ করে।
 
@@ -141,4 +141,60 @@ class LoginView(APIView):
         
         # Eikhane message and token must ditei hobe and baki ta iccha moto
         return Response({'message': 'Login Success', 'username':user.username, 'token': token}, status=status.HTTP_200_OK)
+```
+
+
+## Nested Serializers:
+### Code:
+`models.py` 
+```
+class SubCartegory(models.Model):
+    name=models.CharField(max_length=200)
+    description=models.TextField(blank=True, null=True)
+    is_active=models.BooleanField(default=False)
+    created_at=models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.name
+
+class Item(models.Model):
+    name=models.CharField(max_length=100)
+    description=models.TextField(blank=True, null=True)
+
+    # related_name='items' eta exactly same name e serializers er field dite hobe and eta diyei nested serializer banano hoi
+    subcategory=models.ForeignKey(SubCartegory, on_delete=models.CASCADE, related_name='items')  #Ekta subcategory te onkgula item thakte pare
+
+    is_active=models.BooleanField(default=False)
+    created_by=models.ForeignKey(User, related_name='user_information', on_delete=models.CASCADE, null=True, blank=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+```
+`serializers.py`
+```
+class ItemSerializer(serializers.ModelSerializer):
+    # Eikhane nijer table(Item) theke ekta field name('created_by') related korci as ('user_information')
+    # So, eikhane bole dite hobe source ta ki and jodi 'related_name' use na kore 
+    # Exact same('created_by') field add kori then ar source bole dite hobe na 
+    user_information = serializers.StringRelatedField(source='created_by', read_only=True)
+    
+    # created_by = serializers.StringRelatedField(read_only=True)
+    class Meta:
+        model = Item
+        fields = '__all__'
+
+
+class SubCartegorySerializer(serializers.ModelSerializer):
+    # items=ItemSerializer(read_only=True, many=True)         # All field dekhate item model er
+    
+    # Eikhane onno table(Item) theke data dekhabo tai 'source' bole dite hobe na
+    # Eikhane source bole dite hocce na cause 'items' name kono field subcategory te nei
+    # So eikhane 'related_name' dhore easily kaj korte parbe
+    items=serializers.StringRelatedField(read_only=True, many=True)  # Just def _str_ er modde ja return koreci ota dekhane
+
+    # items=serializers.PrimaryKeyRelatedField(read_only=True, many=True) # Just items er primary dekhane
+    # items=serializers.HyperlinkedRelatedField(read_only=True, many=True, view_name='itemdetails') #itemsdetails link akare dekhabe
+    class Meta:
+        model=SubCartegory
+        fields= ['name', 'items', 'description']
 ```
