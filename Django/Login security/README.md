@@ -130,6 +130,7 @@ CACHES = {
 }
 -------------------------------------------------------------------------
 ``` 
+---
 
 ### 2️⃣ Rate Limiting (Global)
 - DRF throttle system ব্যবহার করা হয়েছে।  
@@ -179,6 +180,7 @@ class LoginView(APIView):
 -------------------------------------------------------------------------------------------------
 
 ```
+---
 
 ### 4️⃣ Endpoint-specific Throttle
 - প্রতিটি heavy endpoint বা sensitive API এর জন্য custom throttle rate define করা যায়।  
