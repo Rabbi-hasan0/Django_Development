@@ -25,7 +25,7 @@
   - Course content boring হবে
   - তুমি যদি Markdown বা অন্য editor use করো → আলাদা parsing + extra setup লাগবে
 
-## Swtup
+## Setup
    1. setiings e media file add + apps add +
 
 
