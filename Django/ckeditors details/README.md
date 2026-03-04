@@ -25,10 +25,12 @@
   - Course content boring হবে
   - তুমি যদি Markdown বা অন্য editor use করো → আলাদা parsing + extra setup লাগবে
 
-## Setup
-   1. setiings e media file add + apps add +
+## Setup:
+   1. setiings e media file add + apps add + others add 
+   2. models e [`RichTextUploadingField()`] add 
+   3. project level urls e path add 
 
-
+## Example:
 ```python
 `models.py`
 from ckeditor_uploader.fields import RichTextUploadingField
