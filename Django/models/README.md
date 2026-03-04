@@ -82,6 +82,7 @@ class Profile(models.Model):
     image = models.ImageField()
     address = models.TextField()
 -----------------------------------------
+
 `serializers.py`
 class RegisterSerializer(serializers.ModelSerializer):
     phone=serializers.CharField(required=True, write_only=True)
