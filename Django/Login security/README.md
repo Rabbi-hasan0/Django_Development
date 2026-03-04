@@ -35,7 +35,7 @@ then runserver
 2. Modify login class [views.py]
 3. Add apps and middleware in [settings.py]
 4. Note: user = authenticate(request=request, phone=phone, password=password) ছাড়া না। like: user=user.check_password(password) এটা দিলে কাজ করবে না ।
-```
+```python
 backends.py
 ---------------------------------------------------------
 from django.contrib.auth.backends import BaseBackend
@@ -140,7 +140,7 @@ CACHES = {
 **Setup:**
 1. Add some rest-framework in `settings.py`
 2. 
-```
+```python
 settings.py
 ---------------------------------------------------------
 REST_FRAMEWORK = {
@@ -187,7 +187,7 @@ class LoginView(APIView):
 - Example: `/courses/` API → 1000/hour per user.  
 - যেই ক্লাসে আমি বেশি রিকুয়েস্ট দিতে চায় না ওই ক্লাসে আমি এটা ইউজ করতে পারি
 
-```
+```python
 #views.py
 ----
 from rest_framework.throttling import ScopedRateThrottle
