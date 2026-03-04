@@ -75,16 +75,39 @@ We can also add **custom permissions**.
 
 ## ✅ Amra chaile User model e custom kichu fields add korte pari
 ```python
-models.py
+`models.py`
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField(max_length=15)
     image = models.ImageField()
     address = models.TextField()
+-----------------------------------------
+`serializers.py`
+class RegisterSerializer(serializers.ModelSerializer):
+    phone=serializers.CharField(required=True, write_only=True)
+    class Meta:
+        model=User
+        fields=['first_name', 'phone', 'password', 'username']
+        extra_kwargs = {        
+            'password': {
+                'write_only': True   #password dot dot dekhabe
+            }
+        }
+    # amra jehetu -(ModelSerializer) use koreci, so autometic create hobe eikhane amr phone add koreci ejonno amra overwrite korlam
+    def create(self, validated_data):
+        phone=validated_data.pop('phone')
+        user=User.objects.create_user (
+            first_name=validated_data['first_name'],
+            password=validated_data['password'],
+            username=validated_data['username']
+        )
+        Profile.objects.create(user=user, phone=phone) #models er profile class e object pass korci  
+        return user
+-----------------------------------------------------------
 ```
 But (Recomended use AbstractUser)
 ```python 
-models.py  
+`models.py`  
 from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     phone = models.CharField(max_length=15)
@@ -93,3 +116,7 @@ class User(AbstractUser):
 settings.py
 AUTH_USER_MODEL = 'accounts.User'
 ```
+
+
+
+
