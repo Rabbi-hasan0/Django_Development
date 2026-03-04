@@ -146,8 +146,8 @@ class LoginView(APIView):
 
 ## Nested Serializers:
 ### Code:
+```python
 `models.py` 
-```
 class SubCartegory(models.Model):
     name=models.CharField(max_length=200)
     description=models.TextField(blank=True, null=True)
@@ -169,9 +169,9 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
-```
+------------------------------------------------------------------------------------
+
 `serializers.py`
-```
 class ItemSerializer(serializers.ModelSerializer):
     # Eikhane nijer table(Item) theke ekta field name('created_by') related korci as ('user_information')
     # So, eikhane bole dite hobe source ta ki and jodi 'related_name' use na kore 
@@ -198,3 +198,25 @@ class SubCartegorySerializer(serializers.ModelSerializer):
         model=SubCartegory
         fields= ['name', 'items', 'description']
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
