@@ -40,7 +40,7 @@ class Course(models.Model):
         return f"{self.title}"
 -----------------------------------------------------
 
-1️⃣ Generic API View (DRF): 
+#1️⃣ Generic API View (DRF): 
 # usecase: REST API বানানো, slug দিয়ে GET/PUT/DELETE করা।
 `views.py`
 class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -61,7 +61,7 @@ urlpatterns = [
 ---------------------
 
 
-2️⃣ Class-Based View (DetailView):
+#2️⃣ Class-Based View (DetailView):
 # usecase: Simple page render করতে হবে (HTML template), slug দিয়ে URL খুঁজে দেখাতে।
 `models.py`
 class CourseDetailView(DetailView):
@@ -81,7 +81,7 @@ urlpatterns = [
 ----------------------
 
 
-3️⃣ Function-Based View (FBV)
+#3️⃣ Function-Based View (FBV)
 # Use case: Quick/simple view, slug দিয়ে data খুঁজে দেখানো।
 `models.py`
 from django.shortcuts import get_object_or_404, render
