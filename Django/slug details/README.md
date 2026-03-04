@@ -63,7 +63,7 @@ urlpatterns = [
 
 #2️⃣ Class-Based View (DetailView):
 # usecase: Simple page render করতে হবে (HTML template), slug দিয়ে URL খুঁজে দেখাতে।
-`models.py`
+`views.py`
 class CourseDetailView(DetailView):
     model = Course
     template_name = "course_detail.html"
@@ -83,7 +83,7 @@ urlpatterns = [
 
 #3️⃣ Function-Based View (FBV)
 # Use case: Quick/simple view, slug দিয়ে data খুঁজে দেখানো।
-`models.py`
+`views.py`
 from django.shortcuts import get_object_or_404, render
 from .models import Course
 
